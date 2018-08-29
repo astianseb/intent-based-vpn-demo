@@ -1,0 +1,44 @@
+tosca_definitions_version: cloudify_dsl_1_3
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/4.2/types.yaml
+  - types/demo-types.yaml
+
+node_templates:
+
+  HQ:
+    type: cloudify.nodes.vRouter
+    relationships:
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn1
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn2
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn3
+
+  branch-1-rtr:
+    type: cloudify.nodes.vRouter
+    relationships:
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn1
+
+  branch-2-rtr:
+    type: cloudify.nodes.vRouter
+    relationships:
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn2
+
+  branch-3-rtr:
+    type: cloudify.nodes.vRouter
+    relationships:
+      - type: cloudify.relationships.rtr_connected_to_vpn
+        target: vpn3
+
+  vpn1:
+    type: cloudify.nodes.Vpn
+
+  vpn2:
+    type: cloudify.nodes.Vpn
+
+  vpn3:
+    type: cloudify.nodes.Vpn
